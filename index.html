@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dear Jones ❤️ | A Little Birthday Story</title>
+  <meta name="description" content="A little birthday story made especially for Dear Jones ❤️">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Poppins:wght@300;400;500;600&family=Caveat:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ============ AMBIENT BACKGROUND (shared) ============ -->
+  <div class="grain"></div>
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- ============ SECURITY / PIN SCREEN ============ -->
+  <div id="pinScreen" class="pin-screen">
+    <div class="pin-glow pin-glow--pink"></div>
+    <div class="pin-glow pin-glow--purple"></div>
+
+    <div class="pin-card" role="dialog" aria-label="Enter secret code">
+      <p class="eyebrow">✦ A Little Secret ✦</p>
+      <h1 class="pin-heading">This story is just for you ❤️</h1>
+      <p class="pin-sub">There is a little surprise waiting behind this door…<br>Enter the secret code to continue.</p>
+
+      <div class="pin-boxes" id="pinBoxes">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box" data-index="0"
+          aria-label="Digit 1">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box" data-index="1"
+          aria-label="Digit 2">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box" data-index="2"
+          aria-label="Digit 3">
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-box" data-index="3"
+          aria-label="Digit 4">
+      </div>
+
+      <p id="pinMessage" class="pin-message" aria-live="polite">&nbsp;</p>
+
+      <button id="unlockBtn" class="btn btn--primary" disabled>
+        <span>Unlock the Surprise ✨</span>
+      </button>
+
+      <p class="pin-footer">A tiny secret made with ❤️</p>
+    </div>
+  </div>
+
+  <!-- ============ LOADER ============ -->
+  <div id="loader" class="loader hidden">
+    <p class="loader-text">Opening your little surprise…</p>
+    <div class="loader-bar">
+      <div class="loader-fill" id="loaderFill"></div>
+    </div>
+  </div>
+
+  <!-- ============ BIRTHDAY EXPERIENCE ============ -->
+  <div id="app" class="app hidden">
+
+    <!-- desktop dot navigation -->
+    <nav class="dot-nav" id="dotNav" aria-label="Slide navigation">
+      <button class="dot" data-target="0" aria-label="Intro"><span>Intro</span></button>
+      <button class="dot" data-target="1" aria-label="Birthday"><span>Birthday</span></button>
+      <button class="dot" data-target="2" aria-label="Memories"><span>Memories</span></button>
+      <button class="dot" data-target="3" aria-label="Little Things"><span>Little Things</span></button>
+      <button class="dot" data-target="4" aria-label="Letter"><span>Letter</span></button>
+      <button class="dot" data-target="5" aria-label="One More Thing"><span>One More Thing</span></button>
+      <button class="dot" data-target="6" aria-label="Final Surprise"><span>Final Surprise</span></button>
+    </nav>
+
+    <!-- mobile progress -->
+    <div class="mobile-progress" aria-hidden="true">
+      <div class="mobile-progress-fill" id="mobileProgressFill"></div>
+    </div>
+
+    <!-- music toggle -->
+    <button id="musicBtn" class="music-btn" aria-label="Toggle music">🎵</button>
+    <p id="musicNote" class="music-note hidden">Music can be added later 🎵</p>
+
+    <main id="slides" class="slides">
+
+      <!-- ===================== SLIDE 1 ===================== -->
+      <section class="slide" id="slide-0" data-index="0">
+        <div class="slide-bg slide-bg--intro"></div>
+        <div class="slide-content">
+          <p class="script-line">Hey <span class="name-fill"></span> ❤️</p>
+          <h1 class="fade-line delay-1">I made something special for you…</h1>
+          <p class="fade-line delay-2">A little story.<br>A few memories.<br>And a birthday wish.</p>
+          <button class="btn btn--primary fade-line delay-3" id="openSurpriseBtn">
+            <span>Open Your Surprise ✨</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ===================== SLIDE 2 ===================== -->
+      <section class="slide" id="slide-1" data-index="1">
+        <div class="slide-bg slide-bg--birthday"></div>
+        <div class="slide-content">
+          <div class="cake-scene" aria-hidden="true">
+            <div class="balloon balloon--1"></div>
+            <div class="balloon balloon--2"></div>
+            <div class="balloon balloon--3"></div>
+            <div class="cake">
+              <div class="candle">
+                <div class="flame"></div>
+              </div>
+              <div class="cake-top"></div>
+              <div class="cake-mid"></div>
+              <div class="cake-base"></div>
+            </div>
+          </div>
+          <h2 class="reveal-heading">Happy Birthday,<br><span class="name-fill"></span> ❤️</h2>
+          <p class="reveal-sub">Today isn't just another day.<br>It's the day someone truly special<br>came into this
+            world.</p>
+          <p class="reveal-tag">Another year. Another chapter.<br>More memories to create.</p>
+          <button class="btn btn--ghost" data-next>Continue the Story →</button>
+        </div>
+      </section>
+
+      <!-- ===================== SLIDE 3 ===================== -->
+      <section class="slide" id="slide-2" data-index="2">
+        <div class="slide-bg slide-bg--memories"></div>
+        <div class="slide-content slide-content--wide">
+          <h2 class="reveal-heading">Some moments become memories…<br>And some memories stay forever. ❤️</h2>
+          <div class="gallery" id="gallery"></div>
+        </div>
+      </section>
+
+      <!-- ===================== SLIDE 4 ===================== -->
+      <section class="slide" id="slide-3" data-index="3">
+        <div class="slide-bg slide-bg--love"></div>
+        <div class="slide-content slide-content--wide">
+          <h2 class="reveal-heading">It's the little things…</h2>
+          <div class="love-grid" id="loveGrid"></div>
+        </div>
+      </section>
+
+      <!-- ===================== SLIDE 5 ===================== -->
+      <section class="slide" id="slide-4" data-index="4">
+        <div class="slide-bg slide-bg--letter"></div>
+        <div class="slide-content">
+          <div id="envelopeStage" class="envelope-stage">
+            <p class="fade-line">Dear <span class="name-fill"></span>…</p>
+            <p class="fade-line delay-1">You have a little letter waiting for you. 💌</p>
+            <div class="envelope" id="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"></div>
+              <div class="envelope-paper"></div>
+            </div>
+            <button class="btn btn--primary delay-2" id="openLetterBtn">
+              <span>Open My Letter</span>
+            </button>
+          </div>
+          <div id="letterStage" class="letter-stage hidden">
+            <div class="letter-paper">
+              <p id="letterText" class="letter-text"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== SLIDE 6 ===================== -->
+      <section class="slide" id="slide-5" data-index="5">
+        <div class="slide-bg slide-bg--onemore"></div>
+        <div class="slide-content">
+          <div id="onemoreLines" class="onemore-lines"></div>
+          <button class="btn btn--primary hidden" id="finalSurpriseBtn">
+            <span>Final Surprise ✨</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ===================== SLIDE 7 ===================== -->
+      <section class="slide" id="slide-6" data-index="6">
+        <div class="slide-bg slide-bg--final"></div>
+        <div class="slide-content">
+          <div id="finalIntro" class="final-intro">
+            <h2 class="fade-line">Happy Birthday</h2>
+            <h1 class="fade-line delay-1"><span class="name-fill"></span> ❤️</h1>
+            <p class="fade-line delay-2">May this year bring you…<br>more happiness, more adventures,<br>more laughter,
+              and countless beautiful memories.</p>
+            <p class="fade-line delay-3 emoji-row">🎂 🎈 ✨ ❤️ 🎉</p>
+            <div class="wish-cake" aria-hidden="true">
+              <div class="wish-candle" id="wishCandle">
+                <div class="flame" id="wishFlame"></div>
+              </div>
+              <div class="cake-top"></div>
+              <div class="cake-mid"></div>
+              <div class="cake-base"></div>
+            </div>
+            <button class="btn btn--primary delay-4" id="makeWishBtn"><span>Make a Wish ✨</span></button>
+          </div>
+          <div id="finalOutro" class="final-outro hidden">
+            <h2 class="fade-line">Happy Birthday Once Again,<br><span class="name-fill"></span> ❤️</h2>
+            <p class="fade-line delay-1">Here's to another beautiful chapter.</p>
+            <p class="fade-line delay-2 made-with">Made with ❤️ just for <span class="name-fill"></span></p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ============ MEMORY MODAL ============ -->
+  <div id="memoryModal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Memory detail">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <div class="modal-img-wrap">
+        <img id="modalImg" src="" alt="">
+      </div>
+      <div class="modal-info">
+        <span id="modalNumber" class="modal-number"></span>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDate" class="modal-date"></p>
+        <p id="modalDesc" class="modal-desc"></p>
+      </div>
+      <button class="modal-nav modal-nav--prev" id="modalPrev" aria-label="Previous memory">‹</button>
+      <button class="modal-nav modal-nav--next" id="modalNext" aria-label="Next memory">›</button>
+    </div>
+  </div>
+
+  <audio id="bgAudio" loop preload="none"></audio>
+
+  <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>
